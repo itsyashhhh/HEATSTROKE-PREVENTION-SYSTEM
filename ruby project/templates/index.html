@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature and Intensity Monitor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature and Intensity Monitor</h1>
+        <div id="data">
+            <p><strong>Temperature:</strong> <span id="temp">Loading...</span> °C</p>
+            <p><strong>Intensity:</strong> <span id="intensity">Loading...</span></p>
+        </div>
+    </div>
+
+    <script>
+        function fetchData() {
+            fetch('/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temp').textContent = data.temp;
+                    document.getElementById('intensity').textContent = data.intensity;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // Fetch data every 2 seconds
+        setInterval(fetchData, 2000);
+
+        // Initial fetch
+        fetchData();
+    </script>
+</body>
+</html>
+
